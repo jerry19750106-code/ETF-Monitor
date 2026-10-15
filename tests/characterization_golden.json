@@ -1,0 +1,423 @@
+{
+ "cases": {
+  "act_sym_buy": {
+   "kind": "ok",
+   "value": "'🟢'"
+  },
+  "act_sym_cut": {
+   "kind": "ok",
+   "value": "'🔴'"
+  },
+  "act_sym_other": {
+   "kind": "ok",
+   "value": "'🟡'"
+  },
+  "adj_weekend": {
+   "kind": "ok",
+   "value": "datetime.date(2026, 9, 14)"
+  },
+  "align_overnight": {
+   "kind": "ok",
+   "value": "([0.020000000000000018, -0.02941176470588236, 0.02020202020202011], [0.010000000000000009, -0.01980198019801982, 0.015151515151515138])"
+  },
+  "auto_position": {
+   "kind": "ok",
+   "value": "'低檔 | RSI=32'"
+  },
+  "cdrain_calm": {
+   "kind": "ok",
+   "value": "(0.2, '市場平靜(基準0.20)')"
+  },
+  "cdrain_manual_fresh": {
+   "kind": "ok",
+   "value": "(0.45, '人工加碼至0.45(突發·效期內)')"
+  },
+  "cdrain_manual_nodate": {
+   "kind": "ok",
+   "value": "(0.2, '(人工值0.45無時間戳c_drain_as_of→棄用改實時,防釘死)')"
+  },
+  "cdrain_manual_stale": {
+   "kind": "ok",
+   "value": "(0.2, '(人工值0.45已過期9天→棄用改實時)')"
+  },
+  "cdrain_stress": {
+   "kind": "ok",
+   "value": "(0.57, 'VIX32偏高(+0.20) + WTI急漲+6.0%(+0.12) + 金價+2.5%避險買盤(+0.05)')"
+  },
+  "clamp_trend_in": {
+   "kind": "ok",
+   "value": "0.4"
+  },
+  "clamp_trend_out": {
+   "kind": "ok",
+   "value": "1.0"
+  },
+  "cny_track": {
+   "kind": "ok",
+   "value": "{'current': 7.25, 'vs_yesterday': 0.9749303621169957, 'vs_20ma': 2.1126760563380333, 'level': '🔴 危險', 'reason': ['絕對位 7.2500 ≥ 7.10 心理關卡', '日內貶值 +0.97% > 0.3%', '突破 20MA +2.11% > 2%']}"
+  },
+  "cny_track_min": {
+   "kind": "ok",
+   "value": "{'current': 7.0, 'vs_yesterday': None, 'vs_20ma': None, 'level': '🟢 健康', 'reason': ['未觸發任何警戒']}"
+  },
+  "eff_sox_coupled": {
+   "kind": "ok",
+   "value": "0.02"
+  },
+  "eff_sox_decoupled": {
+   "kind": "ok",
+   "value": "None"
+  },
+  "events_block": {
+   "kind": "ok",
+   "value": "'## 📅 重大事件日曆 (events.csv + 自動規律事件)\\n\\n* **2026-09-16 09:00** | LPR | 影響: `All` | 🟡high ✍️\\n* **2026-09-17 02:00** | FOMC | 影響: `Tech+QDII` | 🔴critical ✍️\\n\\n'"
+  },
+  "events_block_empty": {
+   "kind": "ok",
+   "value": "'## 📅 重大事件日曆\\n\\n> 📂 近期無重大事件\\n\\n'"
+  },
+  "factor_attr": {
+   "kind": "ok",
+   "value": "{'ok': True, 'alpha_pct_ann': -3.84, 'beta': 1.32, 'r2': 0.993, 't_alpha': -0.49, 'n': 10, 'label': '大盤', 'caveat': '⚠️單因子OLS,樣本n=10;α未經多因子/行業中性化,僅觀察用'}"
+  },
+  "flow_behavior_1": {
+   "kind": "ok",
+   "value": "('🟡 **買家被套/假布局**', '5日淨流入5.0億卻跌-1.2%,主力可能誘多或被外力打斷')"
+  },
+  "flow_behavior_2": {
+   "kind": "ok",
+   "value": "('🟠 **逆勢拉升/空頭回補**', '5日淨流出6.0億卻漲+2.0%,或為空頭回補、散戶接盤')"
+  },
+  "fragility_act_high": {
+   "kind": "ok",
+   "value": "(-20, '🔴 內生崩盤風險高(脆弱度80)·禁主攻', True)"
+  },
+  "fragility_act_low": {
+   "kind": "ok",
+   "value": "(0, '', False)"
+  },
+  "fragility_calm": {
+   "kind": "ok",
+   "value": "0"
+  },
+  "fragility_hot": {
+   "kind": "ok",
+   "value": "85"
+  },
+  "geo_icon_high": {
+   "kind": "ok",
+   "value": "'🔴'"
+  },
+  "geo_icon_low": {
+   "kind": "ok",
+   "value": "'🟡'"
+  },
+  "geo_lbl_energy": {
+   "kind": "ok",
+   "value": "'—(非航運敏感)'"
+  },
+  "geo_lbl_tech": {
+   "kind": "ok",
+   "value": "'🟡 有條件通航'"
+  },
+  "handoff_full": {
+   "kind": "ok",
+   "value": "'\\n## 🔮 昨日收盤情報交棒 → 今日起手情境\\n\\n> 📌 昨日(2026-10-14)收盤對「今日一切情報」的市場級綜合。盤前據此 + 隔夜美股 + 新聞 → 今日預測(因果鏈:收盤總結→盤前起手)。\\n\\n**市場綜合**:regime — ｜ 機構5日資金 +0.0億(中性,0進/0出) ｜ 新聞面 +0.20(偏多,3則·今晨即時)\\n\\n> 宏觀先驗傾向(均值):+0.00\\n\\n'"
+  },
+  "handoff_none": {
+   "kind": "ok",
+   "value": "'\\n## 🔮 昨日收盤情報交棒\\n\\n> ⬜ 無昨日收盤交棒(收盤報未寫入 `closing_handoff`)→ 今日盤前純用隔夜美股+新聞起手。\\n\\n'"
+  },
+  "inline_md": {
+   "kind": "ok",
+   "value": "'<strong class=\"font-bold text-slate-900\">主攻</strong> <span class=\"text-emerald-600 font-bold\">🟢</span> <span class=\"font-mono font-semibold text-emerald-600\">+1.25%</span> <code class=\"bg-slate-100 text-purple-700 px-1 rounded text-sm font-mono\">008888</code> <span class=\"text-red-600 font-bold\">🔴</span> <span class=\"font-mono font-semibold text-red-600\">-0.5%</span>'"
+  },
+  "judgment_hit": {
+   "kind": "ok",
+   "value": "'✅對'"
+  },
+  "judgment_miss": {
+   "kind": "ok",
+   "value": "'❌踏空'"
+  },
+  "morning_diag": {
+   "kind": "ok",
+   "value": "'\\n## 🔍 開盤半小時·果因診斷（早報核心：美股傳導的果 vs 有人提前布局的因）\\n\\n| 代碼 | 名稱 | 美股預期 | 開盤實際 | 資金流 | 診斷 | 操作建議 |\\n|------|------|---------|---------|--------|------|---------|\\n| 008888 | 芯片 | +1.2% | +1.80% | 主力+0.90億 | ✅跟隨型(果) | → 跟隨美股傳導,無新資訊;持有 |\\n| 016185 | 電力 | — | -0.40% | 主力-0.30億 | ➡️待觀察 | → 數據不足;觀望至午報 |\\n| 00929 | 台股科技 | +1.0% | ~0 | N/A(台股無大小單) | ➡️待觀察 | → 數據不足;觀望至午報 |\\n\\n> 📋 今早判讀：1檔跟隨美股(果)\\n> 💡 布局型已用『相對異常』過濾市場共性：只標逆當日多數而動的少數，才是疑似提前知情的領先信號。操作建議為單日資金面參考，非重倉指令，可觀望至午報定。\\n\\n'"
+  },
+  "morning_diag_empty": {
+   "kind": "ok",
+   "value": "''"
+  },
+  "nth_weekday": {
+   "kind": "ok",
+   "value": "datetime.date(2026, 9, 9)"
+  },
+  "order_flow_div": {
+   "kind": "ok",
+   "value": "{'verdict': '價跌主力吸(疑吸籌)', 'icon': '🔴', 'ev_adj': 5, 'detail': '今日價-1.2%跌卻主力淨流入+1.20億→單日吸籌背離'}"
+  },
+  "order_flow_none": {
+   "kind": "ok",
+   "value": "None"
+  },
+  "pb_diff_diff": {
+   "kind": "raise",
+   "value": "TypeError"
+  },
+  "pb_diff_ok_diff": {
+   "kind": "ok",
+   "value": "['  ❌ A.buy: 自動=100.00 vs LEGACY=120.00', '  ❌ A.total_pnl: 自動=10.00 vs LEGACY=-10.00', '  ❌ B 自動有LEGACY無', '  ❌ C LEGACY有自動無']"
+  },
+  "pb_diff_ok_same": {
+   "kind": "ok",
+   "value": "[]"
+  },
+  "pb_diff_same": {
+   "kind": "raise",
+   "value": "TypeError"
+  },
+  "pb_parse_bad": {
+   "kind": "ok",
+   "value": "7.0"
+  },
+  "pb_parse_empty": {
+   "kind": "ok",
+   "value": "0.0"
+  },
+  "pb_parse_ok": {
+   "kind": "ok",
+   "value": "0.0"
+  },
+  "pb_status_neg": {
+   "kind": "ok",
+   "value": "'⚠️'"
+  },
+  "pb_status_pos": {
+   "kind": "ok",
+   "value": "'🛡️'"
+  },
+  "pearson": {
+   "kind": "ok",
+   "value": "0.7745966692414834"
+  },
+  "pearson_flat": {
+   "kind": "ok",
+   "value": "None"
+  },
+  "pinned_ret": {
+   "kind": "ok",
+   "value": "(-0.019801980198019802, '2026-09-02', 1)"
+  },
+  "pinned_ret_none": {
+   "kind": "ok",
+   "value": "(None, None, 0)"
+  },
+  "pos_status_-10.0": {
+   "kind": "ok",
+   "value": "(4, '⚠️ 小虧 (-10%~-3%)')"
+  },
+  "pos_status_-25.0": {
+   "kind": "ok",
+   "value": "(5, '🚨 重虧 (<-10%)')"
+  },
+  "pos_status_-3.0": {
+   "kind": "ok",
+   "value": "(3, '⚖️ 打平 (-3%~+5%)')"
+  },
+  "pos_status_0.0": {
+   "kind": "ok",
+   "value": "(3, '⚖️ 打平 (-3%~+5%)')"
+  },
+  "pos_status_15.0": {
+   "kind": "ok",
+   "value": "(2, '🛡️ 浮盈 (+5%~+20%)')"
+  },
+  "pos_status_40.0": {
+   "kind": "ok",
+   "value": "(1, '🛡️🛡️ 強勢護城河 (≥+20%)')"
+  },
+  "pos_status_5.0": {
+   "kind": "ok",
+   "value": "(2, '🛡️ 浮盈 (+5%~+20%)')"
+  },
+  "predict_default": {
+   "kind": "ok",
+   "value": "(0.0, '低', '全因子近零:無資金流數據且技術面中性 → 預測值不具方向意義', {'主力當日': 0.0, '主力5日': 0.0, 'RSI反轉': 0.0, '趨勢動能': 0.0, '脆弱阻尼': 0.0, '產業新聞': 0.0})"
+  },
+  "predict_strong": {
+   "kind": "ok",
+   "value": "(0.93, '低', '主力淨流入2.0億 | RSI28超賣 | 新聞偏多(+0.50)', {'主力當日': 0.467, '主力5日': 0.18, 'RSI反轉': 0.25, '趨勢動能': -0.15, '脆弱阻尼': 0.0, '產業新聞': 0.188})"
+  },
+  "pw_bad": {
+   "kind": "ok",
+   "value": "''"
+  },
+  "pw_disp_fresh": {
+   "kind": "ok",
+   "value": "'強勢突破'"
+  },
+  "pw_disp_stale": {
+   "kind": "ok",
+   "value": "'定性已過期60日·以系統實算RSI/EV為準·待重刷'"
+  },
+  "pw_fresh": {
+   "kind": "ok",
+   "value": "' ⏱️保鮮3日✅'"
+  },
+  "pw_stale": {
+   "kind": "ok",
+   "value": "' ⏱️保鮮40日🔴已過期·此定性判斷勿依賴,需聯網重刷'"
+  },
+  "qdii_no": {
+   "kind": "ok",
+   "value": "False"
+  },
+  "qdii_yes": {
+   "kind": "ok",
+   "value": "False"
+  },
+  "ret_by_date": {
+   "kind": "ok",
+   "value": "{'2026-09-02': 0.020000000000000018, '2026-09-03': -0.02941176470588236, '2026-09-04': 0.02020202020202011}"
+  },
+  "rvol": {
+   "kind": "ok",
+   "value": "0.2164"
+  },
+  "rvol_short": {
+   "kind": "ok",
+   "value": "None"
+  },
+  "sanitize_bad": {
+   "kind": "ok",
+   "value": "([10.0, 10.0, 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9, 11.0, 11.1, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7], 5, False)"
+  },
+  "sanitize_ok": {
+   "kind": "ok",
+   "value": "([10.0, 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9, 11.0, 11.1, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 12.0, 12.1, 12.2, 12.3, 12.4], 0, True)"
+  },
+  "secid_bad": {
+   "kind": "ok",
+   "value": "None"
+  },
+  "secid_sh": {
+   "kind": "ok",
+   "value": "'1.518880'"
+  },
+  "secid_sz": {
+   "kind": "ok",
+   "value": "'0.159995'"
+  },
+  "seesaw": {
+   "kind": "ok",
+   "value": "{'scenario': '🔴 Risk-off（恐慌避險）', 'impact': {'Defensive': 10, 'Tech': -5, 'Cyclical': -10, 'QDII': -5}, 'gold_ret': 0.02, 'oil_ret': -0.03, 'vix': 24.0}"
+  },
+  "seesaw_quiet": {
+   "kind": "ok",
+   "value": "{'scenario': '🔄 中性', 'impact': {}, 'gold_ret': 0.001, 'oil_ret': 0.002, 'vix': 15.0}"
+  },
+  "spearman": {
+   "kind": "ok",
+   "value": "0.8999999999999998"
+  },
+  "state_actor_none": {
+   "kind": "ok",
+   "value": "('⚪ 國家隊:無寬基ETF資金流數據,無法判斷', 0, '需接寬基ETF(510300/510050/510500)當日淨流入')"
+  },
+  "state_actor_rescue": {
+   "kind": "ok",
+   "value": "('🏛️ 國家隊護盤跡象:疑似', 2, '寬基ETF淨流入+25億 + 大盤-1.50%下跌(逆勢買) → 兩特徵;機構/散戶通道特徵未齊')"
+  },
+  "tech_conc_hi": {
+   "kind": "ok",
+   "value": "{'tech_pct': 46.0, 'qdii_pct': 10.0, 'level': '🔴 危急', 'action': '強制減倉至 40% 以下'}"
+  },
+  "tech_conc_lo": {
+   "kind": "ok",
+   "value": "{'tech_pct': 20.0, 'qdii_pct': 0, 'level': '🟢 健康', 'action': '正常操作'}"
+  },
+  "today_focus": {
+   "kind": "ok",
+   "value": "[{'priority': 2, 'icon': '🔴', 'title': 'VIX 飆升', 'text': 'VIX 27.0 > 25 進入恐慌區，全市場降槓桿'}, {'priority': 2, 'icon': '🚨', 'title': '隔夜美股暴跌 - A股科技開盤壓力', 'text': 'SOX -4.50% / NDX -2.00%，科技/QDII板塊今日開盤承壓，禁止追高、Tech只出不進'}, {'priority': 2, 'icon': '🚨', 'title': '重大事件 - CPI', 'text': ' 影響 All，午報前不調倉'}]"
+  },
+  "today_focus_empty": {
+   "kind": "ok",
+   "value": "[{'priority': 0, 'icon': '🟢', 'title': '今日盤面無重大異動', 'text': '維持既定策略，等待 09:30 早報訊號'}]"
+  },
+  "trend3_cat": {
+   "kind": "ok",
+   "value": "{'returns_3d': [], 'cum_3d': 0, 'stdev': 0, 'pattern': '資料不足'}"
+  },
+  "trend3_short": {
+   "kind": "ok",
+   "value": "{'returns_3d': [], 'cum_3d': 0, 'stdev': 0, 'pattern': '資料不足'}"
+  },
+  "trend3_up": {
+   "kind": "ok",
+   "value": "{'returns_3d': [], 'cum_3d': 0, 'stdev': 0, 'pattern': '資料不足'}"
+  },
+  "us_date_mon": {
+   "kind": "ok",
+   "value": "'2026-09-11'"
+  },
+  "us_date_wed": {
+   "kind": "ok",
+   "value": "'2026-09-15'"
+  },
+  "vscale": {
+   "kind": "ok",
+   "value": "0.6667"
+  },
+  "vscale_none": {
+   "kind": "ok",
+   "value": "1.0"
+  }
+ },
+ "generated_from": "pre-refactor V24_19_ETF_System.py",
+ "sources": {
+  "_action_to_symbol": "7034199c465ab36f516370b2ad1fdc4bcab53d804c1d2c9278bd53401cae6cf2",
+  "_ae_adjust_weekend": "4ba33b13df9aeb0ffe7c787f594b88359a1ba81b70017ea29aeae82d63662d65",
+  "_ae_nth_weekday": "0b80577cbe47aa7c0df88850838630e1dd3e9ac3b4b16e38a0fa7656215037ae",
+  "_align_overnight": "318b9fd7c8da425c6e142b3ec12db0c12421d59c8a1f4c9a47d1809dae546149",
+  "_auto_position": "cffa31259bf2db97e4bd666d7dea568578f02ffaddbae0df93e33d9b1f99af52",
+  "_clamp_snapshot_trend": "ddee707a3a5fa7ea42ae3e72d7e3ae23e13ce36891eefab9c1ea950cca797aee",
+  "_compute_judgment": "193896ba3e173eca2566b731ccd266228db43dc9332d70d08b8e1b89210a0526",
+  "_expected_latest_us_date": "002cdf883493218aa115f2266daa8b648a698b35e53f27eb6a1fc0476360c852",
+  "_geo_icon_from_cdrain": "2ec312cd3e09cd36b40ef553dbac47ebd8b5d684267fc1d23c75d76a527d25dc",
+  "_geo_lbl_for_style": "31282ad2cbfa1bb406de63288c8dc620c58b88a8ba6cc70faa133dfefb5e49d3",
+  "_inline_md_format": "e009f429f46f409f9abe1d70d7866d1bf2d4e69eed82fd4d1c4e253bae289825",
+  "_is_qdii_etf": "db2d82f3a160fd244e2a34f0dee7e8d363450b8804ddf030b24019754e24de54",
+  "_now_utc8": "bb810e3c0cb7b4f846499a142bdcd1e8b99b49d423706db9ab3486d0f6941178",
+  "_pb_parse_float": "dcf701c84049607f4676dcc3d48ee0c5297c7cc4438dcc0d43d286a90c82f7ad",
+  "_pb_status_from_pct": "c02ea21b3610d78f1bdda2247e3f2c6c6e67ec9669e25803a14c8eff3cae5891",
+  "_pearson": "31893bc826b2a01bff87fb36b827300ca4e6e9905f7d85da20fbe9fec6db60a5",
+  "_proxy_to_secid": "c0bd8f51a97d7143a59774b5c5c618b2324b5360f1a6630094a15a8e5b168d3f",
+  "_pw_freshness_tag": "98406e2932b7885123f299cc8781faeb12a1b906b91da9e8ec1ea107cac57e33",
+  "_pw_qualitative_display": "804eddf54ea950644033c2727fcd50cb95a9adfb70e39a6c813e20b2ce2bc1fb",
+  "_series_to_returns_by_date": "34c0cc7050a19ceadcd2075e688468a0d825ff28419411aaab9b4fca129989fd",
+  "_spearman": "42192c892c7e5c8a77b512e7e0136ed6d612935233eb6345797fd2b50aa5129d",
+  "analyze_3day_trend": "9da9246e31da115b69d59441a9585534801a61fcc268e1003bd7704f4c04c04c",
+  "analyze_cny_dual_track": "8658d7c594a7e1293aa362ee5448bedda6318abdc4ba356e2bb1a6fc00a4ed3e",
+  "analyze_gold_oil_seesaw": "26f39d1012bd8ab254dd504dde144778b0d1feb651cfd3869ba5047c6843b1d9",
+  "analyze_tech_concentration": "3a5d9a699e7a4b45d19de7522a433f07d214f9412d499f6a556169d3b66e5eef",
+  "classify_position_status": "cfe9893dff330a9353de3aacf8a896064fbc43a45c2fe7346834689695eb5492",
+  "compute_fragility": "552f1b9ee9911b7d4cd8a4eb5765efedccff75a68593a37da34002b51e7e06ec",
+  "compute_pinned_ret": "fd5136d2dc246aa90adbef1adc80ba187f8ad20329169d8b43a8ead8cfdd798a",
+  "compute_realized_vol": "19b54f0828e3663700bbdc1b998e5140cdd96e5ef94ec00879c98beb3d156ffd",
+  "derive_c_drain": "df42fc2539b6a2a43acba9590c7b84d7d1804c3015f63eba49bce36a73b65472",
+  "effective_sox_for": "112f7b0ea247086843c7f90ed8bea0751a2da59478dda9455616c865b200575b",
+  "factor_attribution": "bf095827f2b03d38e42d820d281e8e38b7791af35b6467056c6cf82c774a41ae",
+  "format_closing_handoff": "a712a6d8ac1b1837d13a7560079090733a18cb4d149d9423e3c7fdddcd6dc1a6",
+  "format_events_block": "0674521073b1eb541061455d04d3c2fcdac6bc51428e2adda1c63589298d6386",
+  "format_morning_diag_block": "f7ed3862c74c9495b1abceafa264ed48e446d994e76b71bf6735a953998ca27d",
+  "fragility_action": "b7503cf2de163df9d5898d002c45b3209f2ee00607b0fa26a4e92aeee496dba8",
+  "generate_today_focus": "5fe8fbba95c6be95b67da2d02f69eb1e944b983ba992d1786f3962a36cfe8491",
+  "identify_state_actor": "6d1006ebda33de8ded2a55f51b2ce04686740a7496d0d9af34c96c00bc2720cb",
+  "interpret_flow_behavior": "8b930535f0a537274720794e41dff7360dd11c4f81ed3ab3785a5ebefd8c55a3",
+  "judge_order_flow": "3b423976a6084f8d460b009fd92a970df656cd5bbe026b1de0cf6ac0134ec0d4",
+  "positionbook_diff_audit": "e52e5751f6a011a06a5e51ccdd64c583064885dd8f3cc0794cac1b893b939994",
+  "predict_tomorrow": "a5a0d1a4823640704945fe47d9b3292ad20dc3b4b83eeac3bb4bbd1a34df29ac",
+  "sanitize_price_series": "a1daa6bd956df7a09cbe54fb03e39be7695abb046dacec9d2454efebfe69c9ac",
+  "vol_scale_factor": "2490cb4895a49f916a9ca216909ef1a06b51915455efc394edd296447a00268c"
+ }
+}

@@ -1,0 +1,11 @@
+{
+  "_說明": "範例(金額為虛構)。複製為 personal_holdings.json 並填入自己的持倉;該檔已列入 .gitignore。holdings=現值;costs: buy=累計買入、sell=累計贖回、current=現值。",
+  "holdings": {
+    "000216": 1000.0,
+    "008888": 500.0
+  },
+  "costs": {
+    "000216": {"buy": 1200.0, "sell": 300.0, "current": 1000.0, "total_pnl": 100.0, "pnl_pct": 8.3, "status": "🛡️"},
+    "008888": {"buy": 500.0, "sell": 0.0, "current": 500.0, "total_pnl": 0.0, "pnl_pct": 0.0, "status": "⚖️"}
+  }
+}

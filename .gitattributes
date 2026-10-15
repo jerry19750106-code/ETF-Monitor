@@ -1,0 +1,4 @@
+# Windows 批次檔以 CRLF 原樣存入(不做換行轉換):LF 換行會讓 cmd.exe 把行切錯、把碎片當指令執行。
+# 存 CRLF 本身而非靠 checkout 轉換,這樣 git clone、GitHub 下載 ZIP、直接下載單檔都拿到 CRLF。
+*.cmd -text
+*.bat -text

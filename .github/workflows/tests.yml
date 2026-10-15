@@ -1,0 +1,30 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+    env:
+      # 主程式 import 時的網路探測與盡調自動抓取一律關閉;測試另以 monkeypatch 攔截 requests
+      EM_FORCE_IPV4: "0"
+      DD_AUTO_REFRESH: "0"
+      ETF_VERBOSE: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && pip install "numpy>=1.24" "requests>=2.31" "openpyxl>=3.1" "pytest>=7.4"
+      - name: Byte-compile
+        run: python -m py_compile src/*.py
+      - name: Run tests
+        run: python -m pytest tests -v

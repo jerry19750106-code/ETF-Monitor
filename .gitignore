@@ -1,0 +1,66 @@
+# 忽略 Python 快取
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 虛擬環境
+.venv/
+venv/
+env/
+
+# 本機資料庫（可能含持倉與成本價等敏感資訊）
+*.db
+*.db-journal
+*.db.bak*
+*.sqlite
+*.sqlite3
+# 例外：保留樣本庫供雲端任務回測
+!data_sample/v20_prediction_log.db
+
+# 報告輸出（每次執行都會產生，且含即時行情）
+reports/
+*.html
+!docs/*.html
+
+# 快取
+.yahoo_fallback_cache.json
+*_cache.json
+.cache/
+
+# Excel / 中間產物（體積大且可重新生成）
+*.xlsx
+*.xls
+*.zip
+
+# Excel 暫存鎖檔
+~$*.xlsx
+~$*.xls
+
+# 環境與憑證
+.env
+*.key
+*.pem
+overnight_override.json
+
+# 編輯器
+.vscode/
+.idea/
+*.swp
+
+# 系統
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# 個人持倉(私人倉庫以 git add -f 追蹤;公開版不含)
+personal_holdings.json
+
+# 本機生成的盡調快取（可由 dd_fetcher.py 重抓）
+src/dd_meta_auto.json
+
+# 執行時產生的檔案(README 範例輸出資料夾、自動抓取的新聞)
+etf_output/
+src/news.csv

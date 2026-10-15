@@ -1,0 +1,45 @@
+[project]
+name = "etf-monitor"
+version = "24.30.0"
+description = "A股場外聯接基金 / 台股 ETF 輪動監控:每日四報、可交易優勢稽核、回測與資料血緣"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Jerry Hsiao", email = "jerry19750106@gmail.com"}]
+dependencies = [
+    "numpy>=1.24",
+    "requests>=2.31",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+extras = [
+    "xlrd>=2.0",
+    "akshare",
+]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.1",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 200
+target-version = "py310"
+
+[tool.ruff.lint]
+# 單檔巨型專案，暫時只開啟關鍵規則
+select = ["E9", "F63", "F7", "F82"]
+# E501 行長過長：主程式有大量長行，暫不啟用
+ignore = ["E501"]
