@@ -310,6 +310,33 @@ def test_main_rs_rank_scan_failure_marks_unavailable(etf_mod):
     assert etf_mod.data_availability.is_unavailable(f"RS_RANK:{code}")
 
 
+def test_main_rs_rank_no_prices_marks_unavailable_and_is_not_ranked(etf_mod):
+    """取不到價格(回空序列,非例外)時原本靜默給 50 分,報告照印「#1/11」這種沒有依據的排名。"""
+    code = "999998"
+    targets = {code: {"market": "A股", "style": "Tech", "proxy": None},
+               "999997": {"market": "A股", "style": "Tech", "proxy": None}}
+    namespace = {
+        "TARGET_ETFS": {code: targets[code]},
+        "DirectDataFetcher": etf_mod.DirectDataFetcher,
+        "np": etf_mod.np,
+        "time": mock.Mock(sleep=lambda *_: None),
+        "proxy_last_seen": {},
+        "rs_ev_map": {},
+        "strait_status": "conditional_open",
+        "w_tw": 0.481, "w_a": 0.531, "c_drain": 0.20,
+        "GEO_ADJ_TABLE": etf_mod.GEO_ADJ_TABLE,
+        "_data_unavailable": etf_mod._data_unavailable,
+    }
+    with mock.patch.object(etf_mod.DirectDataFetcher, "get_eastmoney_nav", return_value=[]):
+        result = _exec_snippet("RS-Rank預掃描失敗", namespace,
+                                wrap_for="for code, info in TARGET_ETFS.items():")
+
+    assert result["rs_ev_map"][code] == 50
+    assert etf_mod.data_availability.is_unavailable(f"RS_RANK:{code}")
+    groups = etf_mod._rs_style_groups({code: 50, "999997": 70}, targets)
+    assert groups == {"Tech": [("999997", 70)]}
+
+
 # ════════════════════════════════════════════════════════════════
 # A11: main() Risk-off level 計算失敗(VIX不可用) → 靜默維持「正常」
 # ════════════════════════════════════════════════════════════════

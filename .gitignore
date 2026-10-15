@@ -64,3 +64,8 @@ src/dd_meta_auto.json
 # 執行時產生的檔案(README 範例輸出資料夾、自動抓取的新聞)
 etf_output/
 src/news.csv
+
+# 執行狀態與個人持倉成本(未設 ETF_OUTPUT_DIR 時寫在倉庫根目錄;不可誤提交)
+v20_brain.json
+v22_positions.json
+manual_flow.json

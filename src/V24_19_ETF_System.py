@@ -17,6 +17,15 @@ import re as _re_ver   # [V24.25] 版本自檢用
 import requests
 import json, datetime, time, os, re, warnings, sqlite3, traceback
 
+# 主控台編碼:必須在任何 print 之前。輸出被導向檔案/管線(排程、> log.txt)時,Windows 預設用
+# 地區編碼(cp950/cp936),無法編碼 ✅⚠️ 等字元,啟動即 UnicodeEncodeError。
+import sys as _enc_sys
+for _enc_stream in (_enc_sys.stdout, _enc_sys.stderr):
+    try:
+        _enc_stream.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass   # 被替換成無 reconfigure 的物件(如測試擷取)時維持原狀
+
 # [雲端任務A] 資料可用性標記旁路(與本檔同目錄的新增模組,零改動既有回傳值)。
 import sys as _das_sys
 _das_here = os.path.dirname(os.path.abspath(__file__))
@@ -6604,6 +6613,8 @@ DD_META = {
 
 # [V24.20] ★自動盡調資料併入(dd_fetcher 產出) — 放在 DD_META 定義之後才能覆蓋
 DD_AUTO_TTL_DAYS = int(os.getenv("DD_AUTO_TTL_DAYS", "7"))   # [V24.28] 自動盡調保鮮期
+# 不產生報告的指令:不必為它們先花 30-90 秒連網抓盡調
+_NO_REPORT_ARGS = {"-h", "--help", "--list-positions", "--set-position", "--remove-position"}
 
 
 def _ensure_dd_auto():
@@ -6622,6 +6633,8 @@ def _ensure_dd_auto():
     """
     if os.getenv("DD_AUTO_REFRESH", "1") == "0":
         return "ℹ️ DD_AUTO_REFRESH=0,略過盡調自動更新"
+    if _NO_REPORT_ARGS.intersection(sys.argv[1:]):
+        return "ℹ️ 未執行報告(說明/持倉指令),略過盡調自動更新"
     _cands = [os.path.join(_d, "dd_meta_auto.json") for _d in
               (_PB_BASE_DIR, BASE_DIR)]
     _p = next((x for x in _cands if os.path.exists(x)), None)
@@ -10366,13 +10379,35 @@ def _run_self_audit():
 
 
 
+def _rs_style_groups(rs_ev_map, targets):
+    """同 Style 內依 RS 分數排名。預掃描登記為不可用(中性 50 分)的標的不參與排名:
+    否則全部取不到價格時,報告仍會印出依字典順序排出的「#1/11」,看似有依據其實沒有。"""
+    groups = {}
+    for code, ev_score in rs_ev_map.items():
+        if data_availability.is_unavailable(f"RS_RANK:{code}"):
+            continue
+        groups.setdefault(targets[code]["style"], []).append((code, ev_score))
+    for s in groups:
+        groups[s].sort(key=lambda x: x[1], reverse=True)
+    return groups
+
+
 def main():
     import argparse
     parser = argparse.ArgumentParser(description=f"{__VERSION__} 九龍合璧")
-    parser.add_argument("--date")
+
+    def _iso_date(s):
+        try:
+            datetime.datetime.strptime(s, "%Y-%m-%d")
+        except ValueError:
+            raise argparse.ArgumentTypeError(f"日期格式須為 YYYY-MM-DD,收到 {s!r}")
+        return s
+
+    parser.add_argument("--date", type=_iso_date, help="以指定日期執行,格式 YYYY-MM-DD")
     parser.add_argument("--force-type",
                         choices=["盤前報","早報","午報","收盤報","夜間快報"])
-    parser.add_argument("--set-position")
+    parser.add_argument("--set-position",
+                        help="設定持倉成本,格式 代碼,成本[,入倉日],例如 --set-position 004070,1.234")
     parser.add_argument("--remove-position",
                         help="移除持倉成本記錄，例如 --remove-position 004070")
     parser.add_argument("--list-positions", action="store_true",
@@ -10382,7 +10417,9 @@ def main():
                         help="顯示詳細錯誤訊息（debug 模式）")
     parser.add_argument("--audit", action="store_true",
                         help="一鍵跑完整代碼審計（不執行任何報告）")
-    args, _ = parser.parse_known_args()
+    args, _unknown = parser.parse_known_args()
+    if _unknown:   # 拼錯的參數原本被靜默忽略,改成照預設時段跑報告卻不告知
+        print(f"⚠️ 無法識別的參數已忽略:{' '.join(_unknown)}(用 --help 查看可用參數)")
     reset_news_audit()   # [V22.74] 每輪歸零新聞審計計數(在任何 compute_news_score 之前)
     data_availability.reset()   # [雲端任務A] 每次執行從乾淨的可用性登記表開始
     _PRICE_SKIPPED.clear(); _WATCH_SKIPPED.clear()
@@ -10401,6 +10438,10 @@ def main():
 
     if args.set_position:
         parts = args.set_position.split(",")
+        try:
+            float(parts[1])
+        except (IndexError, ValueError):
+            parser.error(f"--set-position 格式須為 代碼,成本[,入倉日],收到 {args.set_position!r}")
         if len(parts) >= 2:
             PositionBook.load()
             PositionBook.set_position(parts[0].strip(), float(parts[1]),
@@ -11342,6 +11383,9 @@ def main():
                 prices_rs = DirectDataFetcher.get_eastmoney_nav(code)
 
             if not prices_rs or len(prices_rs) < 20:
+                # 與下方例外分支同理:沒有價格就沒有排名,登記後由 _rs_style_groups 排除
+                _data_unavailable(f"RS_RANK:{code}",
+                                  f"價格序列 {len(prices_rs or [])} 筆(<20),改用中性50分")
                 rs_ev_map[code] = 50
                 continue
 
@@ -11383,12 +11427,7 @@ def main():
             rs_ev_map[code] = 50
 
     # 計算同Style排名
-    style_groups = {}
-    for code, ev_score in rs_ev_map.items():
-        s = TARGET_ETFS[code]["style"]
-        style_groups.setdefault(s, []).append((code, ev_score))
-    for s in style_groups:
-        style_groups[s].sort(key=lambda x: x[1], reverse=True)
+    style_groups = _rs_style_groups(rs_ev_map, TARGET_ETFS)
 
     def get_rs_label(code):
         style = TARGET_ETFS[code]["style"]
