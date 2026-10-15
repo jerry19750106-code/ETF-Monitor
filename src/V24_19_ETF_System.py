@@ -436,6 +436,10 @@ LOG_DB        = os.path.join(BASE_DIR, LOG_DB_NAME)
 _LOG_DB_EXISTED_AT_START = os.path.exists(LOG_DB)   # 之後 _init_db 會建立空表,須在此之前記錄
 
 
+_PRICE_SKIPPED = []   # 本次執行因價格取不到而未納入報告的持倉/標的
+_WATCH_SKIPPED = []   # 同上(觀察池)
+
+
 def _history_present(db_path):
     """資料庫裡是否真的有歷史(predictions 至少一筆)。
     只看檔案存在不夠:import 本檔(例如只跑 --help)就會建立空資料庫,
@@ -7788,6 +7792,9 @@ class WatchlistScanner:
                 if not _pok:
                     print(f"   [觀察池] {code} {info['name']} 有效價格不足20天"
                           f"(剔除{_pdrop}筆後剩{len(prices)})，跳過")
+                    _WATCH_SKIPPED.append(code)
+                    _data_unavailable("WATCH_PRICES", f"{len(_WATCH_SKIPPED)} 檔觀察池價格取不到:"
+                                      f"{', '.join(_WATCH_SKIPPED)}")
                     continue
 
                 # ─ 量化計算（與主循環相同） ─────────────────
@@ -10378,6 +10385,7 @@ def main():
     args, _ = parser.parse_known_args()
     reset_news_audit()   # [V22.74] 每輪歸零新聞審計計數(在任何 compute_news_score 之前)
     data_availability.reset()   # [雲端任務A] 每次執行從乾淨的可用性登記表開始
+    _PRICE_SKIPPED.clear(); _WATCH_SKIPPED.clear()
     _register_history_status(_history_present(LOG_DB), BASE_DIR)
 
     # 啟用 verbose 模式
@@ -11468,6 +11476,9 @@ def main():
                       f" [剩 {len(prices)} 筆]")
             if not _pok:
                 print(f"   ⚠️ {code} 有效價格不足20天(剔除{_pdrop}筆後剩{len(prices)})，跳過")
+                _PRICE_SKIPPED.append(code)   # [審查] 報告頂部要明說哪些標的沒進本報
+                _data_unavailable("ETF_PRICES", f"{len(_PRICE_SKIPPED)}/{len(TARGET_ETFS)} 檔價格取不到,"
+                                  f"未納入本報:{', '.join(_PRICE_SKIPPED)}")
                 continue
 
         except Exception:
