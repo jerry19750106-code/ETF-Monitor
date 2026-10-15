@@ -78,3 +78,17 @@ def test_main_registers_history_after_reset():
     main_src = src[src.index("\ndef main():"):]
     i = main_src.index("data_availability.reset()")
     assert "_register_history_status(" in main_src[i:i + 600]
+
+
+def test_history_present_requires_rows(etf_mod, tmp_path):
+    """只跑過 --help 的空資料庫不算有歷史(2026-10-15 審查發現)。"""
+    import sqlite3
+    mod = etf_mod
+    db = str(tmp_path / "v20_prediction_log.db")
+    assert not mod._history_present(db)                       # 不存在
+    with sqlite3.connect(db) as c:
+        c.execute("CREATE TABLE predictions (ts TEXT, code TEXT)")
+    assert not mod._history_present(db)                       # 存在但空
+    with sqlite3.connect(db) as c:
+        c.execute("INSERT INTO predictions VALUES ('2026-10-15', 'AAA001')")
+    assert mod._history_present(db)                           # 有歷史

@@ -434,6 +434,19 @@ print(f"   [資料夾] {BASE_DIR}  ← {BASE_DIR_REASON}")
 DB_FILE       = os.path.join(BASE_DIR, "v20_brain.json")
 LOG_DB        = os.path.join(BASE_DIR, LOG_DB_NAME)
 _LOG_DB_EXISTED_AT_START = os.path.exists(LOG_DB)   # 之後 _init_db 會建立空表,須在此之前記錄
+
+
+def _history_present(db_path):
+    """資料庫裡是否真的有歷史(predictions 至少一筆)。
+    只看檔案存在不夠:import 本檔(例如只跑 --help)就會建立空資料庫,
+    之後第一次真正出報告時便不再提示「從空白歷史開始」(2026-10-15 審查實測)。"""
+    if not os.path.exists(db_path):
+        return False
+    try:
+        with sqlite3.connect(db_path, timeout=10) as _c:
+            return _c.execute("SELECT 1 FROM predictions LIMIT 1").fetchone() is not None
+    except Exception:
+        return False
 POSITION_FILE = os.path.join(BASE_DIR, "v22_positions.json")
 REPORT_DIR    = os.path.join(BASE_DIR, "reports")
 OVERRIDE_FILE = os.path.join(BASE_DIR, "overnight_override.json")  # [V22.25.9] 鮮數據覆寫檔
@@ -10365,7 +10378,7 @@ def main():
     args, _ = parser.parse_known_args()
     reset_news_audit()   # [V22.74] 每輪歸零新聞審計計數(在任何 compute_news_score 之前)
     data_availability.reset()   # [雲端任務A] 每次執行從乾淨的可用性登記表開始
-    _register_history_status(_LOG_DB_EXISTED_AT_START, BASE_DIR)
+    _register_history_status(_history_present(LOG_DB), BASE_DIR)
 
     # 啟用 verbose 模式
     if args.verbose:
