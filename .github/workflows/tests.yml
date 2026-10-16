@@ -28,3 +28,10 @@ jobs:
         run: python -m py_compile src/*.py
       - name: Run tests
         run: python -m pytest tests -v
+      - name: Run tests with the clock moved forward (catches date-dependent tests)
+        run: |
+          pip install "time-machine>=2.10"
+          for d in 1 45 400; do
+            echo "== clock +$d days"
+            SHIFT_DAYS=$d PYTHONPATH=tests python -m pytest tests -q -p _clock_shift
+          done

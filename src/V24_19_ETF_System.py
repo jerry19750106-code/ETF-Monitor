@@ -61,7 +61,7 @@ _DATA_SESSION.trust_env = False
 #     → 改為單檔內建、覆蓋全部,與 _em_throttled_get 同範式。
 #   ★三道防禦:①代理 TCP 預檢(不燒 timeout) ②落盤快取回退 ③stale 標記進報告
 # ═══════════════════════════════════════════════════════════════════
-_YH_CACHE_FILE = os.path.join(BASE_DIR, ".yahoo_fallback_cache.json") if "BASE_DIR" in dir() else ".yahoo_fallback_cache.json"
+_YH_CACHE_FILE = ".yahoo_fallback_cache.json"   # 資料夾確定後(BASE_DIR)會改指到資料夾內
 _YH_STALE = {}                 # {url_tag: reason} 供報告層查
 _YH_PROXY_DOWN = [None]        # 一次運行只探一次
 _YH_CACHE_MAX_AGE_D = 7
@@ -439,6 +439,7 @@ BASE_DIR, BASE_DIR_REASON = _resolve_base_dir(
     script_parent=os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     home=os.path.expanduser("~"))
 os.makedirs(BASE_DIR, exist_ok=True)
+_YH_CACHE_FILE = os.path.join(BASE_DIR, ".yahoo_fallback_cache.json")
 print(f"   [資料夾] {BASE_DIR}  ← {BASE_DIR_REASON}")
 DB_FILE       = os.path.join(BASE_DIR, "v20_brain.json")
 LOG_DB        = os.path.join(BASE_DIR, LOG_DB_NAME)
@@ -7927,6 +7928,9 @@ class WatchlistScanner:
                 cond_regime = regime_type == WATCHLIST_ENTRY_REGIME
                 cond_ev = ev_est >= WATCHLIST_ENTRY_EV_MIN
                 hits = sum([cond_rsi, cond_regime, cond_ev])
+                # 板塊當日漲跌:只有部分分支會去抓,先給預設值,避免其他分支讀到未定義變數
+                sector_today_ret = None
+                sector_check_ok = False
 
                 if cond_rsi and cond_regime and cond_ev:
                     entry_signal = "✨✨ 強勢進場（三條件齊備）"
@@ -8011,6 +8015,12 @@ class WatchlistScanner:
                         entry_reasons.append(f"❌EV={ev_est}")
                     # [V22.87 修] 進場信號也要尊重資金/接刀子（019072 實證:淨流出仍給可考慮進場→跌16%）
                     _flow5_yi = (flow5_info or {}).get("flow5_yi")
+                    if ret_5d is not None and ret_5d <= -5 and info.get("proxy"):
+                        # 近5日大跌時才需要板塊當日漲跌來判斷是否已反轉
+                        try:
+                            sector_today_ret = DirectDataFetcher.get_sina_proxy_ret(info.get("proxy"))
+                        except Exception as _e:
+                            _log_err(_e, "watchlist_sector_filter")
                     _knife_ret5 = (ret_5d is not None and ret_5d <= -5 and not (sector_today_ret is not None and sector_today_ret > 0.03))  # [V23.3 修缺陷1] proxy今日板塊漲>3%=已反轉,滯後NAV ret_5d不再誤觸接刀子
                     if _knife_ret5:
                         entry_signal = f"⚠️ 接刀子風險（近5日{ret_5d:+.1f}%）"

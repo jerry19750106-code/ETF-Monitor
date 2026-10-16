@@ -64,7 +64,7 @@ CASES = [
     ("handoff_none", "format_closing_handoff", _a(None, None)),
     ("handoff_full", "format_closing_handoff", _a(
         {"sectors": {"Tech": 0.8, "Utility": -0.4}, "top": [("008888", 0.012)], "macro": {"vix": 22.0}},
-        _d(1), live_news={"avg": 0.2, "n": 3})),
+        "2026-10-14", live_news={"avg": 0.2, "n": 3})),  # 固定日期:此函式會把日期印進輸出,用相對日期會隔天就失敗
     ("us_date_mon", "_expected_latest_us_date", _a("2026-09-14")),
     ("us_date_wed", "_expected_latest_us_date", _a("2026-09-16")),
     ("pinned_ret", "compute_pinned_ret", _a(DATED_US, "2026-09-02")),
