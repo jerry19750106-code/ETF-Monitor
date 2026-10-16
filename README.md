@@ -4,6 +4,8 @@
 ![python](https://img.shields.io/badge/python-3.10%20%7C%203.12-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
+[English](README.en.md) | **中文**
+
 每個交易日自動產出四份報告(盤前 / 早報 / 午報 / 收盤報),追蹤 A股場外聯接基金與台股 ETF 的方向訊號、
 資金流、回撤位置與倉位風險,並**持續稽核自己的訊號到底有沒有用**。
 
@@ -20,7 +22,7 @@
 - **誠實的資料**:抓不到的資料顯示為「不可用」並在報告頂部列出,不用 0 或預設值冒充
 - **自我稽核**:每份報告附訊號「可交易優勢」(依實際成交時點)與資訊係數(IC);不顯著的建議不背書
 - **場外基金實務**:收盤淨值成交、15:00 截單、QDII T+7 回款、A/C 份額差異都納入計算
-- **260+ 個測試**,CI 於 Python 3.10 / 3.12 執行,測試全程不連網
+- **270+ 個測試**,CI 於 Python 3.10 / 3.12 執行,測試全程不連網
 
 ## 快速開始
 
@@ -29,6 +31,7 @@ pip install "numpy>=1.24" "requests>=2.31" "openpyxl>=3.1" "pytest>=7.4"
 # 選用:pip install xlrd akshare(讀舊版 .xls 持倉檔、備援資料源;沒有也能跑)
 
 export ETF_OUTPUT_DIR=./etf_output   # 報告、資料庫、brain.json 的位置(未設時自動尋找,見下表)
+                                     # Windows 命令提示字元:set ETF_OUTPUT_DIR=.\etf_output
 python src/V24_19_ETF_System.py --force-type 收盤報     # 盤前報 / 早報 / 午報 / 收盤報
 python src/V24_19_ETF_System.py --help
 ```
@@ -75,7 +78,7 @@ python src/V24_19_ETF_System.py --help
 | `src/data_availability.py` | 資料抓取失敗的登記;報告頂部顯示「本次資料不可用」 |
 | `src/data_source.py`、`signals.py`、`position_book.py`、`reporting.py` | 自主程式拆出的純函式(重構第一階段) |
 | `data_sample/v20_prediction_log.db` | 樣本資料庫(**原始、未清洗**,作為證據與測試輸入) |
-| `tests/` | 260+ 個測試;CI 於 Python 3.10 / 3.12 執行 |
+| `tests/` | 270+ 個測試;CI 於 Python 3.10 / 3.12 執行 |
 | `docs/` | 變更紀錄、稽核、回測基線、資料血緣、重構計畫 |
 
 ## 既有資料庫升級
