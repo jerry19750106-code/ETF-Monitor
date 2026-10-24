@@ -112,7 +112,7 @@ All `requests` calls are intercepted while the main program is imported, so the 
 [MIT License](LICENSE): free to use, modify and redistribute (including commercially) as long as the copyright and
 license notice are kept. **No warranty; the author is not liable for any loss from using this program.**
 
-- Author: Jerry Hsiao
+- Author: Jerry Hsiao (蕭永滐)
 - Email: jerry19750106@gmail.com
 - GitHub: [@jerry19750106-code](https://github.com/jerry19750106-code)
 
