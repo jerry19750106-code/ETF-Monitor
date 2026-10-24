@@ -122,7 +122,7 @@ EM_FORCE_IPV4=0 DD_AUTO_REFRESH=0 python -m pytest -q
 本專案以 [MIT License](LICENSE) 授權:可自由使用、修改、再散布(含商業用途),須保留版權與授權聲明;
 **作者不提供任何擔保,也不對使用本程式造成的任何損失負責。**
 
-- 作者:Jerry Hsiao
+- 作者:蕭永滐(Jerry Hsiao)
 - Email:jerry19750106@gmail.com
 - GitHub:[@jerry19750106-code](https://github.com/jerry19750106-code)
 
